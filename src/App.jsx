@@ -1,7 +1,11 @@
-import "./App.css";
 import Home from "./pages/Home";
 import Menu from "./pages/Menu";
 import { Route, Routes } from "react-router-dom";
+
+import "./App.scss";
+import "./pages/Home.scss";
+import "./pages/Menu.scss";
+
 
 function App() {
     
