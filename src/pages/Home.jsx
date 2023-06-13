@@ -15,15 +15,31 @@ function Home() {
   return (
     <>
       <h1>Hubert Eats</h1>
-      {console.log(menu)}
+      <div className="">
+      <input
+          className="searchbar"
+          type="text"
+          // onChange={(e) => setSearch(e.target.value)}
+          value={""}
+          placeholder="Search your recipe"
+        />
+      </div>
+      
+        
+      <div className="recipes-container">
       {menu.map((e, key) => {
         return (
-          <div key={key}>
+          <div key={key}  className="recipes-cards">
             <p>{e.name}</p>
-            <img src={e.img_url} alt="" style={{ height: "50px" }} />
+            <img src={e.img_url} alt="food"/>
+            <button type="button" className="btn-filter" onClick={""}>
+          <span>Add to your menu</span>
+        </button>
           </div>
         );
       })}
+      </div>
+      
     </>
   );
 }

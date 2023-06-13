@@ -1,0 +1,35 @@
+@import "/src/App.scss";
+
+.searchbar {
+    border-radius: 10px;
+    width: 150px;
+}
+
+.recipes-container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.recipes-cards {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    height: 400px;
+    background-color: $bgclr_1;
+
+    p {
+        font-size: x-large;
+        margin: 20px 10px;
+    }
+    img {
+        width: 200px;
+        border-radius: 15px;
+        margin: 20px 10px
+    }
+    button {
+        border-radius: 10px;
+        width: 150px;
+    }
+}
