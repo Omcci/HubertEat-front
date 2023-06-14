@@ -1,4 +1,3 @@
-import React from "React";
 import Home from "./pages/Home";
 import Menu from "./pages/Menu";
 import Navbar from "./components/Navbar";
@@ -8,6 +7,8 @@ import "./App.scss";
 import "./pages/Home.scss";
 import "./pages/Menu.scss";
 import "./components/Navbar.scss";
+import "./components/RecipesList";
+
 
 function App() {
   return (
