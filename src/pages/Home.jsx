@@ -27,7 +27,6 @@ function Home() {
 
   return (
     <>
-     
       {/* <div className="search-container">
         <form>
         <label htmlFor="search">Search for recipes or ingredients</label>
@@ -41,7 +40,7 @@ function Home() {
         <button type="submit">Go</button>  
         </form>
       </div> */}
-      <SearchBar search={search} setSearch={setSearch}/>
+      <SearchBar search={search} setSearch={setSearch} />
       <RecipesList recipes={recipes} search={search} />
 
       {/* <div className="recipes-container">
