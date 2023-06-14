@@ -12,64 +12,70 @@
 //     height: 30px;
 // }
 
-form {
-  position: relative;
-  width: 30rem;
-  background: #57bd84;
-  border-radius: 0.7rem;
-}
-input,
-button {
-  height: 5rem;
-  border: 0;
-  color: #2f2f2f;
-  font-size: 1.2rem;
-}
-input[type="search"] {
-  width: 100%;
-  border: 1px solid ;
-  background: #fff;
-  padding: 0 1.6rem;
-  border-radius: 0.7rem;
-  transition: all 0.3s cubic-bezier(0, 0, 0.43, 1.49);
-  transition-property: width, border-radius;
-  z-index: 1;
-  position: relative;
-}
-button {
-  display: none;
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 6rem;
-  font-weight: bold;
-  background: #57bd84;
-  border-radius: 0 0.7rem 0.7rem 0;
-}
+//DECOMMENTEZ POUR SEARCHBAR
+// form {
+//   position: relative;
+//   width: 30rem;
+//   background: #57bd84;
+//   border-radius: 0.7rem;
+// }
+// input,
+// button {
+//   height: 5rem;
+//   border: 0;
+//   color: #2f2f2f;
+//   font-size: 1.2rem;
+// }
+// input[type="search"] {
+//   width: 100%;
+//   border: 1px solid ;
+//   background: #fff;
+//   padding: 0 1.6rem;
+//   border-radius: 0.7rem;
+//   transition: all 0.3s cubic-bezier(0, 0, 0.43, 1.49);
+//   transition-property: width, border-radius;
+//   z-index: 1;
+//   position: relative;
+// }
+// button {
+//   display: none;
+//   position: absolute;
+//   top: 0;
+//   right: 0;
+//   width: 6rem;
+//   font-weight: bold;
+//   background: #57bd84;
+//   border-radius: 0 0.7rem 0.7rem 0;
+// }
 
-input:not(:placeholder-shown) {
-  border-radius: 0.7rem 0 0 0.7rem;
-  width: calc(100% - 6rem);
-  + button {
-    display: block;
-  }
-}
+// input:not(:placeholder-shown) {
+//   border-radius: 0.7rem 0 0 0.7rem;
+//   width: calc(100% - 6rem);
+//   + button {
+//     display: block;
+//   }
+// }
 
-label {
-  position: absolute;
-  clip: rect(1px, 1px, 1px, 1px);
-  padding: 0;
-  border: 0;
-  height: 1px;
-  width: 1px;
-  overflow: hidden;
-}
+// label {
+//   position: absolute;
+//   clip: rect(1px, 1px, 1px, 1px);
+//   padding: 0;
+//   border: 0;
+//   height: 1px;
+//   width: 1px;
+//   overflow: hidden;
+// }
+
 
 .recipes-container {
   display: flex;
   flex-wrap: wrap;
 }
 
+
+.title-container {
+    max-width: 300px;
+}
 .recipes-cards {
   display: flex;
   flex-direction: column;
