@@ -1,13 +1,23 @@
 import React, { useEffect, useState } from "react";
 import { Link, useLocation, useParams } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
+import { Modal, Button } from "antd";
 
 function RecipesCard({ name, img_url, id, viewbutton }) {
+  const [isAddRecipeModalVisible, setIsAddRecipeModalVisible] = useState(false);
+
   const { recipeid } = useParams();
   //   let { state } = useLocation();
   const [toto, setToto] = useState({});
   // const [getRecipe, setGetRecipe] = useState()
   // const navigate = useNavigate()
+
+  const addRecipe = () => {
+    console.log("toto");
+    setTimeout(() => {
+      setIsAddRecipeModalVisible(false);
+    }, 2000);
+  };
 
   const handleClick = (id) => {
     console.log(id);
@@ -23,7 +33,7 @@ function RecipesCard({ name, img_url, id, viewbutton }) {
       body: JSON.stringify(data),
     }).then((res) => {
       if (res.status === 201) {
-        //   Navigate("/")
+        setIsAddRecipeModalVisible(true);
       } else {
         console.error("Erreur");
       }
@@ -81,13 +91,25 @@ function RecipesCard({ name, img_url, id, viewbutton }) {
       <p style={{ fontSize: "4px" }}>{toto?.description}</p>
       {/* </a> */}
       {viewbutton ? (
-        <button
-          type="button"
-          className="btn-fav"
-          onClick={() => handleClick(id)}
-        >
-          <span>Add to your menu</span>
-        </button>
+        <>
+          <button
+            type="button"
+            className="btn-fav"
+            onClick={() => handleClick(id)}
+          >
+            <span>Add to your menu</span>
+          </button>
+          <Modal
+            title="Modal Title"
+            open={isAddRecipeModalVisible}
+            onOk={() => addRecipe()}
+            onCancel={() => {
+              setIsAddRecipeModalVisible(false);
+            }}
+          >
+            <input type="text" />
+          </Modal>
+        </>
       ) : (
         ""
       )}
