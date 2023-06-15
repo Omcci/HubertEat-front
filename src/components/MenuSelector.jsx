@@ -42,11 +42,7 @@ function MenuSelector() {
 
   return (
     <div
-      style={{
-        display: "block",
-        width: 700,
-        padding: 30,
-      }}
+     className="menuSelector"
     >
       <>
         <Button

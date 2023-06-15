@@ -1,4 +1,6 @@
 import React, { useState } from 'react'
+import { Input , Button } from "antd";
+
 
 function SearchBar({search, setSearch}) {
     // const [search, setSearch] = useState("");
@@ -11,14 +13,14 @@ function SearchBar({search, setSearch}) {
         <div className="search-container">
         <form>
         <label htmlFor="search"></label>
-        <input
+        <Input
           className="searchbar"
           type="search"
           onChange={handleSearch}
           value={search}
           placeholder="Search your recipe or ingredients"
         />
-        <button type="submit">Go</button>  
+        {/* <Button type="submit">Go</Button>   */}
         </form>
       </div>
   )

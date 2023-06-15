@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Link, useLocation, useParams } from "react-router-dom";
 // import { useNavigate } from "react-router-dom";
-import { Modal, Button } from "antd";
+import { Modal, Button, Card } from "antd";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
+import InputLabel from "@mui/material/InputLabel";
+import FormControl from '@mui/material/FormControl';
 
 
 function RecipesCard({ name, img_url, id, viewbutton }) {
@@ -12,7 +16,6 @@ function RecipesCard({ name, img_url, id, viewbutton }) {
   const [errorAlert, setErrorAlert] = useState(false);
   const { recipeid } = useParams();
   const [toto, setToto] = useState({});
-
 
   const handleSelect = () => {
     if (selectId != "") {
@@ -26,25 +29,31 @@ function RecipesCard({ name, img_url, id, viewbutton }) {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(data),
-      }).then((res) => {
-            return res.json()
-      }).then((data) => {
-           
-        if (data.code === 201) {
+      })
+        .then((res) => {
+          return res.json();
+        })
+        .then((data) => {
+          if (data.code === 201) {
             setIsAddRecipeModalVisible(true);
             setErrorAlert(false);
             setErrorMessage("");
             setIsAddRecipeModalVisible(false);
           } else {
-            
             setErrorAlert(true);
             setErrorMessage(data.message);
+            setTimeout(() => {
+              setErrorAlert(false);
+            }, 2000);
           }
-        console.log(data)
-    })
+          console.log(data);
+        });
     } else {
       setErrorAlert(true);
       setErrorMessage("Chose a menu");
+      setTimeout(() => {
+        setErrorAlert(false);
+      }, 2000);
     }
   };
 
@@ -78,20 +87,75 @@ function RecipesCard({ name, img_url, id, viewbutton }) {
     }
   }, []);
 
+  const handleSelectChange = (e) => {
+    setSelectId(e.target.value);
+  };
+
   return (
     <div className="recipes-cards">
-      <div className="title-container">
-        <p>{name ? name : toto?.name}</p>
-      </div>
+      {/* <div className="title-container">
+       
+      </div> */}
       {/* <a href="" onClick={handleClickImg(id)}> */}
 
       {/* <a href="" onClick={() => navigate(`/recipes/${id}`)}> */}
-      <Link to={`/recipes/${id ? id : recipeid}`}>
-        <img src={img_url ? img_url : toto?.img_url} alt="food" />
-      </Link>
+      <Card
+        className="card"
+        hoverable
+        cover={
+          <Link to={`/recipes/${id ? id : recipeid}`}>
+            <img src={img_url ? img_url : toto?.img_url} alt="food" />
+          </Link>
+        }
+      >
+        {" "}
+        <h1>{name ? name : toto?.name}</h1>
+        {viewbutton ? (
+          <>
+            <Button
+              className="btn-fav"
+              onClick={() => setIsAddRecipeModalVisible(true)}
+            >
+              <span>Add to your menu</span>
+            </Button>
+            <Modal
+              title=""
+              open={isAddRecipeModalVisible}
+              onOk={() => {
+                handleSelect();
+              }}
+              onCancel={() => {
+                setIsAddRecipeModalVisible(false);
+              }}
+            >
+              <InputLabel id="demo-simple-select-label">Menus</InputLabel>
+              <Select
+               labelId="demo-simple-select-label"
+               id="demo-simple-select"
+                className="selectMenus"
+                value={selectId}
+                onChange={handleSelectChange}
+              >
+                <option>Chose your menu</option>
+                {getName.map((e) => {
+                  return (
+                    <MenuItem key={e.id} value={e.id}>
+                      {e.name}
+                    </MenuItem>
+                  );
+                })}
+              </Select>
+              <p style={{ color: "red" }}>{errorAlert && errorMessage}</p>
+            </Modal>
+          </>
+        ) : (
+          ""
+        )}
+      </Card>
+
       <p style={{ fontSize: "4px" }}>{toto?.description}</p>
       {/* </a> */}
-      {viewbutton ? (
+      {/* {viewbutton ? (
         <>
           <Button
             className="btn-fav"
@@ -127,7 +191,7 @@ function RecipesCard({ name, img_url, id, viewbutton }) {
         </>
       ) : (
         ""
-      )}
+      )} */}
     </div>
   );
 }

@@ -1,0 +1,51 @@
+@import "/src/App.scss";
+
+.recipes-cards {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+  height: 400px;
+  background-color: $bgclr_1;
+  margin-bottom: 30px;
+
+  p {
+    font-size: x-large;
+    margin: 20px 10px;
+  }
+  img {
+    width: 200px;
+    border-radius: 15px;
+    margin: 0 10px;
+  }
+  //   button {
+  //     border-radius: 10px;
+  //     width: 150px;
+  //   }
+
+  .card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    height: 400px;
+    width: 300px;
+    
+
+    h1 {
+      font-size: 16px;
+      
+    }
+  }
+}
+
+.btn-fav {
+  margin: 20px 5px;
+}
+
+.selectMenus {
+    width: 200px;
+}

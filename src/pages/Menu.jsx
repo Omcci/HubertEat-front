@@ -1,18 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import RecipesCard from "../components/RecipesCard";
 import Box from "@mui/material/Box";
-import InputLabel from "@mui/material/InputLabel";
+// import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import { Input, Modal, Button } from "antd";
+import { Input, Modal, Button, Pagination } from "antd";
+
 
 function Menu() {
   const [getRecipes, setGetRecipes] = useState([]);
   const [selectMenu, setSelectMenu] = useState("");
   const [getMenu, setGetMenu] = useState([]);
-  const [deleteMenu, setDeleteMenu] = useState([]);
+  // const [deleteMenu, setDeleteMenu] = useState([]);
   const [changeMenuModal, setChangeMenuModal] = useState(false);
   const [getInput, setGetInput] = useState([]);
 
@@ -176,9 +177,11 @@ function Menu() {
             <Button onClick={() => handleDelete(e.menus_id, e.recipes_id)}>
               Delete
             </Button>
+            
           </>
         );
       })}
+      
     </>
   );
 }
