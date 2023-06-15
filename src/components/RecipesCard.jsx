@@ -3,6 +3,7 @@ import { Link, useLocation, useParams } from "react-router-dom";
 // import { useNavigate } from "react-router-dom";
 import { Modal, Button } from "antd";
 
+
 function RecipesCard({ name, img_url, id, viewbutton }) {
   const [isAddRecipeModalVisible, setIsAddRecipeModalVisible] = useState(false);
   const [getName, setGetName] = useState([]);
@@ -92,13 +93,12 @@ function RecipesCard({ name, img_url, id, viewbutton }) {
       {/* </a> */}
       {viewbutton ? (
         <>
-          <button
-            type="button"
+          <Button
             className="btn-fav"
             onClick={() => setIsAddRecipeModalVisible(true)}
           >
             <span>Add to your menu</span>
-          </button>
+          </Button>
           <Modal
             title="Menu Title"
             open={isAddRecipeModalVisible}

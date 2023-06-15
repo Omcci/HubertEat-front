@@ -59,7 +59,7 @@ function MenuSelector() {
           Create your menu{" "}
         </Button>
         <Modal
-          title="Modal Title"
+          title="Create your Menu"
           open={isAddMenuModalVisible}
           onOk={() => handleClick()}
           onCancel={() => {
