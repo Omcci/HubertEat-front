@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import MenuSelector from "../components/MenuSelector";
 import RecipesList from "../components/RecipesList";
 import SearchBar from "../components/SearchBar";
 
@@ -40,6 +41,7 @@ function Home() {
         <button type="submit">Go</button>  
         </form>
       </div> */}
+      <MenuSelector/>
       <SearchBar search={search} setSearch={setSearch} />
       <RecipesList recipes={recipes} search={search} />
 

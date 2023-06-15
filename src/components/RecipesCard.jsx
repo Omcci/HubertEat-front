@@ -1,56 +1,67 @@
 import React, { useEffect, useState } from "react";
 import { Link, useLocation, useParams } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
+import { Modal, Button } from "antd";
+
 
 function RecipesCard({ name, img_url, id, viewbutton }) {
+  const [isAddRecipeModalVisible, setIsAddRecipeModalVisible] = useState(false);
+  const [getName, setGetName] = useState([]);
+  const [selectId, setSelectId] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [errorAlert, setErrorAlert] = useState(false);
   const { recipeid } = useParams();
-  //   let { state } = useLocation();
   const [toto, setToto] = useState({});
-  // const [getRecipe, setGetRecipe] = useState()
-  // const navigate = useNavigate()
 
-  const handleClick = (id) => {
-    console.log(id);
-    const data = {
-      menus_id: 1,
-      recipes_id: id,
-    };
-    fetch(`http://localhost:8000/menus/recipes`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    }).then((res) => {
-      if (res.status === 201) {
-        //   Navigate("/")
-      } else {
-        console.error("Erreur");
-      }
-    });
+
+  const handleSelect = () => {
+    if (selectId != "") {
+      const data = {
+        menus_id: selectId,
+        recipes_id: id,
+      };
+      fetch(`http://localhost:8000/menus/recipes`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      }).then((res) => {
+            return res.json()
+      }).then((data) => {
+           
+        if (data.code === 201) {
+            setIsAddRecipeModalVisible(true);
+            setErrorAlert(false);
+            setErrorMessage("");
+            setIsAddRecipeModalVisible(false);
+          } else {
+            
+            setErrorAlert(true);
+            setErrorMessage(data.message);
+          }
+        console.log(data)
+    })
+    } else {
+      setErrorAlert(true);
+      setErrorMessage("Chose a menu");
+    }
   };
 
-  //   const handleClickImg = (id) => {
-  //     console.log(id);
-  //     const data = {
-  //       name: name,
-  //       img_url: img_url,
-
-  //     };
-  //     fetch(`http://localhost:8000/recipes/:id`, {
-  //       method: "GET",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify(data),
-  //     }).then((res) => {
-  //       if (res.status === 201) {
-  //         //   Navigate("/")
-  //       } else {
-  //         console.error("Erreur");
-  //       }
-  //     });
-  //   };
+  useEffect(() => {
+    if (isAddRecipeModalVisible) {
+      fetch("http://localhost:8000/menus")
+        .then((res) => {
+          if (res.status === 200) {
+            return res.json();
+          } else {
+            console.error("Erreur");
+          }
+        })
+        .then((data) => setGetName(data))
+        .catch((err) => console.error(err));
+    }
+  }, [isAddRecipeModalVisible]);
 
   useEffect(() => {
     if (recipeid != undefined) {
@@ -81,13 +92,39 @@ function RecipesCard({ name, img_url, id, viewbutton }) {
       <p style={{ fontSize: "4px" }}>{toto?.description}</p>
       {/* </a> */}
       {viewbutton ? (
-        <button
-          type="button"
-          className="btn-fav"
-          onClick={() => handleClick(id)}
-        >
-          <span>Add to your menu</span>
-        </button>
+        <>
+          <Button
+            className="btn-fav"
+            onClick={() => setIsAddRecipeModalVisible(true)}
+          >
+            <span>Add to your menu</span>
+          </Button>
+          <Modal
+            title="Menu Title"
+            open={isAddRecipeModalVisible}
+            onOk={() => {
+              handleSelect();
+            }}
+            onCancel={() => {
+              setIsAddRecipeModalVisible(false);
+            }}
+          >
+            <select
+              value={selectId}
+              onChange={(e) => setSelectId(e.target.value)}
+            >
+              <option>Chose your menu</option>
+              {getName.map((e) => {
+                return (
+                  <option value={e.id}>
+                    <p key={e.id}>{e.name}</p>
+                  </option>
+                );
+              })}
+            </select>
+            <p style={{ color: "red" }}>{errorAlert && errorMessage}</p>
+          </Modal>
+        </>
       ) : (
         ""
       )}

@@ -10,7 +10,7 @@ function SearchBar({search, setSearch}) {
   return (
         <div className="search-container">
         <form>
-        <label htmlFor="search">Search for recipes or ingredients</label>
+        <label htmlFor="search"></label>
         <input
           className="searchbar"
           type="search"
