@@ -8,7 +8,6 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { Input, Modal, Button, Pagination } from "antd";
 
-
 function Menu() {
   const [getRecipes, setGetRecipes] = useState([]);
   const [selectMenu, setSelectMenu] = useState("");
@@ -52,26 +51,23 @@ function Menu() {
   const handleDeleteMenu = () => {
     if (selectMenu != "") {
       console.log(selectMenu);
-      
+
       fetch(`http://localhost:8000/menus/${selectMenu}`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      // body: JSON.stringify(data),
-    }).then((res) => {
-      if (res.status === 204) {
-        const updatedMenus = getMenu.filter(
-          (e) => e.id !== selectMenu
-          
-        );
-        setGetMenu(updatedMenus);
-      } else {
-        console.error("Erreur");
-      }
-    });
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        // body: JSON.stringify(data),
+      }).then((res) => {
+        if (res.status === 204) {
+          const updatedMenus = getMenu.filter((e) => e.id !== selectMenu);
+          setGetMenu(updatedMenus);
+        } else {
+          console.error("Erreur");
+        }
+      });
     }
-  }
+  };
 
   const handleClickOpenModal = () => {
     selectMenu != "" ? setChangeMenuModal(true) : setChangeMenuModal(false);
@@ -150,9 +146,7 @@ function Menu() {
       <Button type="primary" onClick={() => handleClickOpenModal()}>
         Change your menu name
       </Button>
-      <Button onClick={() => handleDeleteMenu()}>
-        Delete your menu
-      </Button>
+      <Button onClick={() => handleDeleteMenu()}>Delete your menu</Button>
 
       <Modal
         title="Update Menu name"
@@ -177,11 +171,9 @@ function Menu() {
             <Button onClick={() => handleDelete(e.menus_id, e.recipes_id)}>
               Delete
             </Button>
-            
           </>
         );
       })}
-      
     </>
   );
 }

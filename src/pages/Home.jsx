@@ -3,7 +3,6 @@ import MenuSelector from "../components/MenuSelector";
 import RecipesList from "../components/RecipesList";
 import SearchBar from "../components/SearchBar";
 
-
 function Home() {
   const [recipes, setRecipes] = useState([]);
   const [search, setSearch] = useState("");

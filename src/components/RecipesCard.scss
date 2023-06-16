@@ -49,3 +49,41 @@
 .selectMenus {
     width: 200px;
 }
+
+.recipe-detail {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin : 86px;
+  
+  
+  p {
+    font-size: 16px;
+  }
+
+  h2 {
+    margin: 20px
+  }
+
+  img {
+    height: 300px;
+  }
+}
+
+.handleNav {
+  position: absolute;
+  top: 69px;
+  left: 40px;
+  color: black;
+  height: 20rem !important;
+  display: flex;
+  width: 100px !important;
+
+  svg {
+    height: 50px;
+    width: 50px;
+  }
+  
+}
+
