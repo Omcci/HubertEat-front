@@ -1,2 +1,12 @@
 @import "/src/App.scss";
 
+.recipesCardMenu {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.menuItem {
+    margin: 20px 30px
+}

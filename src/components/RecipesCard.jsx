@@ -170,7 +170,7 @@ function RecipesCard({ name, img_url, id, viewbutton }) {
           ""
         )}
       </Card>
-      <h2>Instructions</h2>
+      {img_url ? "" : <h2>Instructions</h2> }
       <p>
         {recipeData?.description?.split(".").map((sentence) => (
           <>
