@@ -1,0 +1,19 @@
+@import "/src/App.scss";
+
+
+// .search-container {
+    
+//     display: flex;
+//     flex-direction: row;
+//     justify-content: flex-end;
+//     margin: 30px 0;
+//   }
+
+.searchbar {
+    width: 250px;
+    margin: 20px 10px;
+   
+    @media (max-width: 768px) {
+      width: 140px;
+    }
+}

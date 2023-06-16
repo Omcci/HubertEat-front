@@ -1,0 +1,23 @@
+@import "/src/App.scss";
+
+.menu-wrapper {
+    margin-top: 90px;
+    
+}
+
+
+.recipesCardMenu {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    // margin-top: 60px;
+    @media (max-width: 768px) {
+        flex-direction: column;
+      }
+
+}
+
+.menuItem {
+    margin: 20px 30px
+}

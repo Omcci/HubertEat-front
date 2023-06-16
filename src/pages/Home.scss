@@ -1,0 +1,60 @@
+@import "/src/App.scss";
+
+.nutrition-banner {
+  margin-top: 60px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 440px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-image: url("../assets/food3.jpg");
+  background-attachment: fixed;
+
+  &::after {
+    content: "";
+    height: 440px;
+    width: 100%;
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1;
+    background-color: rgba(0, 0, 0, 0.2);
+    background: linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0) 30%,
+      rgba(0, 0, 0, 0.6) 100%
+    );
+  }
+  p {
+    z-index: 2;
+    font-weight: 600;
+    font-size: 64px;
+    line-height: 96px;
+    text-align: center;
+    color: #ffffff;
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  }
+
+  @media (max-width: 768px) {
+    p {
+      font-size: 36px;
+      padding: 0 16px
+    }
+  }
+}
+
+.header-components {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin: 30px;
+}
