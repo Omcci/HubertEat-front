@@ -1,63 +1,54 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
 import RecipesCard from "./RecipesCard";
-// import { Navigate } from 'react-router-dom';
+import InfiniteScroll from "react-infinite-scroller";
 
 function RecipesList({ recipes, search }) {
-  const filteredRecipes = recipes.filter((recipe) => {
-    const matchSearch =
-      recipe.name.toLowerCase().includes(search.toLowerCase()) ||
-      recipe.ingredients.toLowerCase().includes(search.toLowerCase());
-    return matchSearch;
-  });
+  const [page, setPage] = useState(1);
+  const [filteredRecipes, setFilteredRecipes] = useState([]);
 
-  //   const handleClick = (id) => {
-  //     console.log(id);
-  //     const data = {
-  //         "menus_id" : 1,
-  //         "recipes_id" : id
-  //     }
-  // fetch(`http://localhost:8000/menus/recipes`, {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //     body: JSON.stringify(data),
-  //   }).then((res) => {
-  //     if (res.status === 201) {
-  //     //   Navigate("/")
-  //     } else {
-  //       console.error("Erreur")
-  //     }
-  //   })
-  //   }
+  const loadMore = () => {
+    setPage(page + 1);
+    setFilteredRecipes((prevFilteredRecipes) => [
+      ...prevFilteredRecipes,
+      ...recipes.slice(page * 10, (page + 1) * 10),
+    ]);
+  };
+
+  const filterRecipes = () => {
+    return recipes.filter((recipe) => {
+      const matchSearch =
+        recipe.name.toLowerCase().includes(search.toLowerCase()) ||
+        recipe.ingredients.toLowerCase().includes(search.toLowerCase());
+      return matchSearch;
+    });
+  };
+
+  const filteredRecipesList = filterRecipes();
 
   return (
     <div className="recipes-container">
-      {filteredRecipes.map((e, key) => {
-        return (
-          // <div key={key} className="recipes-cards">
-          //   <div className="title-container">
-          //   <p>{e.name}</p>
-          //   </div>
-          //   <img src={e.img_url} alt="food" />
-          //   <button type="button" className="btn-fav" onClick={() => handleClick(e.id)} >
-          //     <span>Add to your menu</span>
-          //   </button>
-          // </div>
-          
-            // state={{ tata: "sjbdjjzbjdzbzdjbzdjzdjbdzj" }}
-          
+      <InfiniteScroll
+        pageStart={0}
+        loadMore={loadMore}
+        hasMore={filteredRecipesList.length > page * 10}
+        loader={
+          <div className="loader" key={0}>
+            Loading ...
+          </div>
+        }
+      >
+        <div className="recipes-card-grid">
+          {filteredRecipesList.slice(0, page * 10).map((recipe, key) => (
             <RecipesCard
               key={key}
-              name={e.name}
-              img_url={e.img_url}
-              id={e.id}
+              name={recipe.name}
+              img_url={recipe.img_url}
+              id={recipe.id}
               viewbutton
             />
-         
-        );
-      })}
+          ))}
+        </div>
+      </InfiniteScroll>
     </div>
   );
 }

@@ -1,20 +1,22 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import RecipesCard from "../components/RecipesCard";
 import Box from "@mui/material/Box";
-import InputLabel from "@mui/material/InputLabel";
+// import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import { Input, Modal, Button } from "antd";
+import { Input, Modal, Button, Alert, Space } from "antd";
 
 function Menu() {
   const [getRecipes, setGetRecipes] = useState([]);
   const [selectMenu, setSelectMenu] = useState("");
   const [getMenu, setGetMenu] = useState([]);
-  const [deleteMenu, setDeleteMenu] = useState([]);
+  // const [deleteMenu, setDeleteMenu] = useState([]);
   const [changeMenuModal, setChangeMenuModal] = useState(false);
   const [getInput, setGetInput] = useState([]);
+  const [alertMessage, setAlertMessage] = useState("");
+  const [alertVisible, setAlertViible] = useState(false);
 
   const handleChange = (event) => {
     const id = event.target.value;
@@ -37,6 +39,16 @@ function Menu() {
       },
       // body: JSON.stringify(data),
     }).then((res) => {
+      <>
+        <Space
+          direction="vertical"
+          style={{
+            width: "100%",
+          }}
+        >
+          <Alert message="Success Text" type="success" />{" "}
+        </Space>
+      </>;
       if (res.status === 204) {
         const updatedRecipes = getRecipes.filter(
           (e) => e.recipes_id !== recipes_id
@@ -51,26 +63,26 @@ function Menu() {
   const handleDeleteMenu = () => {
     if (selectMenu != "") {
       console.log(selectMenu);
-      
+
       fetch(`http://localhost:8000/menus/${selectMenu}`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      // body: JSON.stringify(data),
-    }).then((res) => {
-      if (res.status === 204) {
-        const updatedMenus = getMenu.filter(
-          (e) => e.id !== selectMenu
-          
-        );
-        setGetMenu(updatedMenus);
-      } else {
-        console.error("Erreur");
-      }
-    });
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        // body: JSON.stringify(data),
+      }).then((res) => {
+        if (res.status === 204) {
+          const updatedMenus = getMenu.filter((e) => e.id !== selectMenu);
+          setGetMenu(updatedMenus);
+        } else {
+          console.error("Erreur");
+        }
+      });
+    } else {
+      setAlertMessage("test");
+      setAlertViible(true);
     }
-  }
+  };
 
   const handleClickOpenModal = () => {
     selectMenu != "" ? setChangeMenuModal(true) : setChangeMenuModal(false);
@@ -107,6 +119,9 @@ function Menu() {
           console.error("Erreur");
         }
       });
+    } else {
+      setAlertMessage("test");
+      setAlertViible(true);
     }
   };
 
@@ -124,16 +139,16 @@ function Menu() {
   }, []);
 
   return (
-    <>
-      <Box sx={{ minWidth: 120 }}>
+    <div className="menu-wrapper">
+      <Box className="menuItem" sx={{ minWidth: 120 }}>
         <FormControl fullWidth>
-          Menu{" "}
+          Select your menu{" "}
           <Select
             style={{ width: "50%" }}
             labelId="idlabel"
             id="select"
-            value={selectMenu}
-            label="Menu"
+            defaultValue={selectMenu}
+            label="menu"
             onChange={(e) => handleChange(e)}
           >
             {getMenu.map((e) => {
@@ -146,13 +161,14 @@ function Menu() {
           </Select>
         </FormControl>
       </Box>
-      <Button type="primary" onClick={() => handleClickOpenModal()}>
+      <div className="button-container">
+      <Button className="menuItem" onClick={() => handleClickOpenModal()}>
         Change your menu name
       </Button>
-      <Button onClick={() => handleDeleteMenu()}>
-        Delete your menu
-      </Button>
-
+      <Button className="menuItem" onClick={() => handleDeleteMenu()}>Delete your menu</Button>
+      </div>
+    
+      <p>{alertMessage && alertVisible}</p>
       <Modal
         title="Update Menu name"
         open={changeMenuModal}
@@ -167,19 +183,26 @@ function Menu() {
         console.log(e);
         return (
           <>
-            <RecipesCard
-              key={e.key}
-              name={e.name}
-              img_url={e.img_url}
-              id={e.id}
-            />
-            <Button onClick={() => handleDelete(e.menus_id, e.recipes_id)}>
-              Delete
-            </Button>
+            <div className="recipesCardMenu">
+              <RecipesCard
+                key={e.key}
+                name={e.name}
+                img_url={e.img_url}
+                id={e.id}
+              />
+              <Button
+                type="primary"
+                danger
+                className="menuItem"
+                onClick={() => handleDelete(e.menus_id, e.recipes_id)}
+              >
+                Delete
+              </Button>
+            </div>
           </>
         );
       })}
-    </>
+    </div>
   );
 }
 

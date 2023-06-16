@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Link, useLocation, useParams } from "react-router-dom";
+import { Link, useLocation, useParams, useNavigate } from "react-router-dom";
 // import { useNavigate } from "react-router-dom";
-import { Modal, Button } from "antd";
-
+import { Modal, Button, Card } from "antd";
+import { LeftCircleFilled } from "@ant-design/icons";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
+import InputLabel from "@mui/material/InputLabel";
+import FormControl from "@mui/material/FormControl";
 
 function RecipesCard({ name, img_url, id, viewbutton }) {
   const [isAddRecipeModalVisible, setIsAddRecipeModalVisible] = useState(false);
@@ -11,8 +15,15 @@ function RecipesCard({ name, img_url, id, viewbutton }) {
   const [errorMessage, setErrorMessage] = useState("");
   const [errorAlert, setErrorAlert] = useState(false);
   const { recipeid } = useParams();
-  const [toto, setToto] = useState({});
+  const [recipeData, setRecipeData] = useState({});
+  const location = useLocation();
+  const currentUrl = location.pathname;
 
+  const nav = useNavigate();
+
+  const handleNav = () => {
+    nav(-1);
+  };
 
   const handleSelect = () => {
     if (selectId != "") {
@@ -26,25 +37,31 @@ function RecipesCard({ name, img_url, id, viewbutton }) {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(data),
-      }).then((res) => {
-            return res.json()
-      }).then((data) => {
-           
-        if (data.code === 201) {
+      })
+        .then((res) => {
+          return res.json();
+        })
+        .then((data) => {
+          if (data.code === 201) {
             setIsAddRecipeModalVisible(true);
             setErrorAlert(false);
             setErrorMessage("");
             setIsAddRecipeModalVisible(false);
           } else {
-            
             setErrorAlert(true);
             setErrorMessage(data.message);
+            setTimeout(() => {
+              setErrorAlert(false);
+            }, 2000);
           }
-        console.log(data)
-    })
+          console.log(data);
+        });
     } else {
       setErrorAlert(true);
       setErrorMessage("Chose a menu");
+      setTimeout(() => {
+        setErrorAlert(false);
+      }, 2000);
     }
   };
 
@@ -73,61 +90,95 @@ function RecipesCard({ name, img_url, id, viewbutton }) {
             console.error("Erreur");
           }
         })
-        .then((data) => setToto(data))
+        .then((data) => setRecipeData(data))
         .catch((err) => console.error(err));
     }
   }, []);
 
-  return (
-    <div className="recipes-cards">
-      <div className="title-container">
-        <p>{name ? name : toto?.name}</p>
-      </div>
-      {/* <a href="" onClick={handleClickImg(id)}> */}
+  const handleSelectChange = (e) => {
+    setSelectId(e.target.value);
+  };
 
-      {/* <a href="" onClick={() => navigate(`/recipes/${id}`)}> */}
-      <Link to={`/recipes/${id ? id : recipeid}`}>
-        <img src={img_url ? img_url : toto?.img_url} alt="food" />
-      </Link>
-      <p style={{ fontSize: "4px" }}>{toto?.description}</p>
-      {/* </a> */}
-      {viewbutton ? (
-        <>
-          <Button
-            className="btn-fav"
-            onClick={() => setIsAddRecipeModalVisible(true)}
-          >
-            <span>Add to your menu</span>
-          </Button>
-          <Modal
-            title="Menu Title"
-            open={isAddRecipeModalVisible}
-            onOk={() => {
-              handleSelect();
-            }}
-            onCancel={() => {
-              setIsAddRecipeModalVisible(false);
-            }}
-          >
-            <select
-              value={selectId}
-              onChange={(e) => setSelectId(e.target.value)}
-            >
-              <option>Chose your menu</option>
-              {getName.map((e) => {
-                return (
-                  <option value={e.id}>
-                    <p key={e.id}>{e.name}</p>
-                  </option>
-                );
-              })}
-            </select>
-            <p style={{ color: "red" }}>{errorAlert && errorMessage}</p>
-          </Modal>
-        </>
-      ) : (
+  const isRecipeDetailPage = currentUrl.startsWith("/recipes/") && recipeid;
+
+  return (
+    <div
+      className={` ${isRecipeDetailPage ? "recipe-detail" : "recipes-cards"}`}
+    >
+      {img_url ? (
         ""
+      ) : (
+        <Link to="/" className="handleNav" onClick={handleNav}>
+          <LeftCircleFilled />{" "}
+        </Link>
       )}
+
+      <Card
+        className="card"
+        hoverable
+        cover={
+          img_url ? (
+            <Link to={`/recipes/${id ? id : recipeid}`}>
+              <img src={img_url} alt="food" />
+            </Link>
+          ) : (
+            <img src={recipeData?.img_url} alt="food" />
+          )
+        }
+      >
+        {" "}
+        <h1>{name ? name : recipeData?.name}</h1>
+        {viewbutton ? (
+          <>
+            <Button
+              className="btn-fav"
+              onClick={() => setIsAddRecipeModalVisible(true)}
+            >
+              <span>Add to your menu</span>
+            </Button>
+            <Modal
+              title=""
+              open={isAddRecipeModalVisible}
+              onOk={() => {
+                handleSelect();
+              }}
+              onCancel={() => {
+                setIsAddRecipeModalVisible(false);
+              }}
+            >
+              <InputLabel id="demo-simple-select-label">Menus</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                className="selectMenus"
+                value={selectId}
+                onChange={handleSelectChange}
+              >
+                <option>Chose your menu</option>
+                {getName.map((e) => {
+                  return (
+                    <MenuItem key={e.id} value={e.id}>
+                      {e.name}
+                    </MenuItem>
+                  );
+                })}
+              </Select>
+              <p style={{ color: "red" }}>{errorAlert && errorMessage}</p>
+            </Modal>
+          </>
+        ) : (
+          ""
+        )}
+      </Card>
+      {img_url ? "" : <h2>Instructions</h2> }
+      <p>
+        {recipeData?.description?.split(".").map((sentence) => (
+          <>
+            {sentence.trim()}.<br />
+          </>
+        ))}
+      </p>
+
     </div>
   );
 }

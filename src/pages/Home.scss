@@ -1,101 +1,60 @@
 @import "/src/App.scss";
 
-.search-container {
-  display: flex;
-  justify-content: flex-end;
-  margin: 30px;
-}
-
-// .searchbar {
-//     border-radius: 10px;
-//     width: 200px;
-//     height: 30px;
-// }
-
-//DECOMMENTEZ POUR SEARCHBAR
-// form {
-//   position: relative;
-//   width: 30rem;
-//   background: #57bd84;
-//   border-radius: 0.7rem;
-// }
-// input,
-// button {
-//   height: 5rem;
-//   border: 0;
-//   color: #2f2f2f;
-//   font-size: 1.2rem;
-// }
-// input[type="search"] {
-//   width: 100%;
-//   border: 1px solid ;
-//   background: #fff;
-//   padding: 0 1.6rem;
-//   border-radius: 0.7rem;
-//   transition: all 0.3s cubic-bezier(0, 0, 0.43, 1.49);
-//   transition-property: width, border-radius;
-//   z-index: 1;
-//   position: relative;
-// }
-// button {
-//   display: none;
-//   position: absolute;
-//   top: 0;
-//   right: 0;
-//   width: 6rem;
-//   font-weight: bold;
-//   background: #57bd84;
-//   border-radius: 0 0.7rem 0.7rem 0;
-// }
-
-// input:not(:placeholder-shown) {
-//   border-radius: 0.7rem 0 0 0.7rem;
-//   width: calc(100% - 6rem);
-//   + button {
-//     display: block;
-//   }
-// }
-
-// label {
-//   position: absolute;
-//   clip: rect(1px, 1px, 1px, 1px);
-//   padding: 0;
-//   border: 0;
-//   height: 1px;
-//   width: 1px;
-//   overflow: hidden;
-// }
-
-
-.recipes-container {
-  display: flex;
-  flex-wrap: wrap;
-}
-
-
-.title-container {
-    max-width: 300px;
-}
-.recipes-cards {
+.nutrition-banner {
+  margin-top: 60px;
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 50%;
-  height: 400px;
-  background-color: $bgclr_1;
+  width: 100%;
+  height: 440px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-image: url("../assets/food3.jpg");
+  background-attachment: fixed;
 
+  &::after {
+    content: "";
+    height: 440px;
+    width: 100%;
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1;
+    background-color: rgba(0, 0, 0, 0.2);
+    background: linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0) 30%,
+      rgba(0, 0, 0, 0.6) 100%
+    );
+  }
   p {
-    font-size: x-large;
-    margin: 20px 10px;
+    z-index: 2;
+    font-weight: 600;
+    font-size: 64px;
+    line-height: 96px;
+    text-align: center;
+    color: #ffffff;
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   }
-  img {
-    width: 200px;
-    border-radius: 15px;
-    margin: 20px 10px;
+
+  @media (max-width: 768px) {
+    p {
+      font-size: 36px;
+      padding: 0 16px
+    }
   }
-  button {
-    border-radius: 10px;
-    width: 150px;
-  }
+}
+
+.header-components {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin: 30px;
 }

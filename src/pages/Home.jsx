@@ -7,10 +7,6 @@ function Home() {
   const [recipes, setRecipes] = useState([]);
   const [search, setSearch] = useState("");
 
-  // const handleSearch = (e) => {
-  //   setSearch(e.target.value);
-  // };
-
   useEffect(() => {
     fetch("http://localhost:8000/recipes")
       .then((res) => res.json())
@@ -19,48 +15,17 @@ function Home() {
       });
   }, []);
 
-  // const filteredRecipes = recipes.filter((recipe) => {
-  //   const matchSearch =
-  //     recipe.name.toLowerCase().includes(search.toLowerCase()) ||
-  //     recipe.ingredients.toLowerCase().includes(search.toLowerCase());
-  //     return matchSearch
-  // });
-
   return (
     <>
-      {/* <div className="search-container">
-        <form>
-        <label htmlFor="search">Search for recipes or ingredients</label>
-        <input
-          className="searchbar"
-          type="search"
-          onChange={handleSearch}
-          value={search}
-          placeholder="Search your recipe or ingredients"
-        />
-        <button type="submit">Go</button>  
-        </form>
-      </div> */}
-      <MenuSelector/>
-      <SearchBar search={search} setSearch={setSearch} />
+      <div className="nutrition-banner">
+        <p>Get yummy yummy !</p>
+        <p>Food for my tummy.</p>
+      </div>
+      <div className="header-components">
+        <MenuSelector />
+        <SearchBar search={search} setSearch={setSearch} />
+      </div>
       <RecipesList recipes={recipes} search={search} />
-
-      {/* <div className="recipes-container">
-
-        {filteredRecipes.map((e, key) => {
-          return (
-            <div key={key} className="recipes-cards">
-              <div className="title-container">
-              <p>{e.name}</p>
-              </div>
-              <img src={e.img_url} alt="food" />
-              <button type="button" className="btn-filter" onClick={""}>
-                <span>Add to your menu</span>
-              </button>
-            </div>
-          );
-        })}
-      </div> */}
     </>
   );
 }
