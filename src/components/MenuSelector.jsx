@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 // import "antd/dist/antd.css";
-import { Modal, Button } from "antd";
+import { Modal, Button, Input } from "antd";
 
 function MenuSelector() {
   const [isAddMenuModalVisible, setIsAddMenuModalVisible] = useState(false);
@@ -64,7 +64,7 @@ function MenuSelector() {
             setErrorMessage("");
           }}
         >
-          <input type="text" onChange={(e) => {
+          <Input type="text" onChange={(e) => {
             setAddMenuName(e.target.value)}}/>
             <p style={{color:"red"}}>{errorAlert && errorMessage}</p>
         </Modal>

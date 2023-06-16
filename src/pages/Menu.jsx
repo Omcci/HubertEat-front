@@ -15,7 +15,8 @@ function Menu() {
   // const [deleteMenu, setDeleteMenu] = useState([]);
   const [changeMenuModal, setChangeMenuModal] = useState(false);
   const [getInput, setGetInput] = useState([]);
-
+  const [alertMessage, setAlertMessage] = useState("");
+  const [alertVisible, setAlertViible] = useState(false);
 
   const handleChange = (event) => {
     const id = event.target.value;
@@ -49,7 +50,6 @@ function Menu() {
         </Space>
       </>;
       if (res.status === 204) {
-       
         const updatedRecipes = getRecipes.filter(
           (e) => e.recipes_id !== recipes_id
         );
@@ -78,6 +78,9 @@ function Menu() {
           console.error("Erreur");
         }
       });
+    } else {
+      setAlertMessage("test");
+      setAlertViible(true);
     }
   };
 
@@ -116,6 +119,9 @@ function Menu() {
           console.error("Erreur");
         }
       });
+    } else {
+      setAlertMessage("test");
+      setAlertViible(true);
     }
   };
 
@@ -133,7 +139,7 @@ function Menu() {
   }, []);
 
   return (
-    <>
+    <div className="menu-wrapper">
       <Box className="menuItem" sx={{ minWidth: 120 }}>
         <FormControl fullWidth>
           Select your menu{" "}
@@ -159,7 +165,7 @@ function Menu() {
         Change your menu name
       </Button>
       <Button onClick={() => handleDeleteMenu()}>Delete your menu</Button>
-
+      <p>{alertMessage && alertVisible}</p>
       <Modal
         title="Update Menu name"
         open={changeMenuModal}
@@ -193,7 +199,7 @@ function Menu() {
           </>
         );
       })}
-    </>
+    </div>
   );
 }
 
