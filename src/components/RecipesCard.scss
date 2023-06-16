@@ -33,12 +33,7 @@
     align-items: center;
     height: 400px;
     width: 300px;
-    
-
-    h1 {
-      font-size: 16px;
-      
-    }
+  
   }
 }
 
@@ -70,7 +65,7 @@
     height: 300px;
   }
 
-  @media (min-width: 768px) {
+  @media (max-width: 768px) {
     p {
       font-size: 16px;
     }
@@ -80,7 +75,8 @@
     }
   
     img {
-      height: 300px;
+      height: 130px;
+      
     }
 
   }

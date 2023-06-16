@@ -1,7 +1,8 @@
 @import "/src/App.scss";
 
 .menu-wrapper {
-    margin-top: 60px;
+    margin-top: 90px;
+    
 }
 
 
@@ -11,6 +12,10 @@
     align-items: center;
     justify-content: center;
     // margin-top: 60px;
+    @media (max-width: 768px) {
+        flex-direction: column;
+      }
+
 }
 
 .menuItem {

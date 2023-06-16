@@ -161,10 +161,13 @@ function Menu() {
           </Select>
         </FormControl>
       </Box>
+      <div className="button-container">
       <Button className="menuItem" onClick={() => handleClickOpenModal()}>
         Change your menu name
       </Button>
-      <Button onClick={() => handleDeleteMenu()}>Delete your menu</Button>
+      <Button className="menuItem" onClick={() => handleDeleteMenu()}>Delete your menu</Button>
+      </div>
+    
       <p>{alertMessage && alertVisible}</p>
       <Modal
         title="Update Menu name"
